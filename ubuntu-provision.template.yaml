@@ -212,7 +212,7 @@ write_files:
     
     # set kubelet nodeip environment variable
     /opt/bin/setup_net_env.sh
-    curl -s -k -v --header 'Authorization: Bearer ${K8S_CLOUD_INIT_TOKEN}' ${K8S_API_ADDR}/api/v1/namespaces/cloud-init-settings/secrets/ubuntu-generic-kubelet-bootstrap-config | jq '.data["kubeconfig"]' -r| base64 -d > /etc/kubernetes/bootstrap-kubelet.conf
+    curl -s -k -v --header 'Authorization: Bearer ${K8S_CLOUD_INIT_TOKEN}' ${K8S_API_ADDR}/api/v1/namespaces/cloud-init-settings/secrets/kubelet-bootstrap-config | jq '.data["kubeconfig"]' -r| base64 -d > /etc/kubernetes/bootstrap-kubelet.conf
     
     systemctl enable --now kubelet
     systemctl enable --now --no-block kubelet-healthcheck.service
@@ -248,7 +248,6 @@ write_files:
     --kubeconfig=/var/lib/kubelet/kubeconfig \
     --config=/etc/kubernetes/kubelet.conf \
     --cert-dir=/etc/kubernetes/pki \
-    --cloud-provider=external \
     --hostname-override=${KUBELET_HOSTNAME} \
     --exit-on-lock-contention \
     --lock-file=/tmp/kubelet.lock \

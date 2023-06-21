@@ -3,7 +3,6 @@ hostname: ${EDGE_HOST_NAME}
 
 ssh_pwauth: false
 
-ssh_authorized_keys:
 write_files:
 - path: '/opt/bin/supervise.sh'
   permissions: '0755'
@@ -41,10 +40,10 @@ write_files:
 
     export DEBIAN_FRONTEND=noninteractive
     apt update && apt install -y curl jq
-    curl -s -k -v --header 'Authorization: Bearer ${K8S_CLOUD_INIT_TOKEN}'	${K8S_API_ADDR}/api/v1/namespaces/cloud-init-settings/secrets/ubuntu-provision-generic | jq '.data["cloud-config"]' -r| base64 -d > /etc/cloud/cloud.cfg.d/ubuntu-provision-generic.cfg
+    curl -s -k -v --header 'Authorization: Bearer ${K8S_CLOUD_INIT_TOKEN}' ${K8S_API_ADDR}/api/v1/namespaces/cloud-init-settings/secrets/ubuntu-provision-generic | jq '.data["cloud-config"]' -r | base64 -d > /etc/cloud/cloud.cfg.d/ubuntu-provision-generic.cfg
     cloud-init clean
 
-    cloud-init --file /etc/cloud/cloud.cfg.d/ubuntu-provision-generic init
+    cloud-init --file /etc/cloud/cloud.cfg.d/ubuntu-provision-generic.cfg init
     systemctl daemon-reload
 
     systemctl daemon-reload
@@ -76,9 +75,6 @@ write_files:
 
 - path: /etc/machine-name
   permissions: '0600'
+  encoding: 'b64'
   content: |-
     ${EDGE_HOST_NAME}
-
-runcmd:
-- systemctl restart bootstrap.service
-- systemctl daemon-reload
