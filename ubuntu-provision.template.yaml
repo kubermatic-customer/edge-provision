@@ -438,6 +438,7 @@ write_files:
 
 - path: '/etc/systemd/system/containerd.service.d/environment.conf'
   permissions: '0644'
+  encoding: 'b64'
   content: |-
     [Service]
     Restart=always
@@ -445,6 +446,7 @@ write_files:
 
 - path: '/etc/crictl.yaml'
   permissions: '0644'
+  encoding: 'b64'
   content: |-
     runtime-endpoint: unix:///run/containerd/containerd.sock
 

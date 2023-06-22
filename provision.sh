@@ -115,5 +115,5 @@ ssh root@"$EDGE_HOST_ADDR" 'cloud-init clean && cloud-init --file /etc/cloud/clo
 ### csr
 
 # TODO: figure out why kubelet/api taints node as uninitialized
-kubectl taint nodes "$EDGE_HOST_NAME" node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedule-
-kubectl certificate approve $(kubectl get csr -oname)
+#kubectl taint nodes "$EDGE_HOST_NAME" node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedule-
+#kubectl certificate approve $(kubectl get csr -oname)
