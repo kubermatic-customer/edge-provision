@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: moxa-demo
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    resources:
+      limits:
+        squat.ai/moxa-ttyr00: 1

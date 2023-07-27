@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: usb
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - name: realtime-dev
+      mountPath: /mnt/root-dev
+  volumes:
+  - name: realtime-dev
+    hostPath:
+      path: /dev
+      type: Directory
+
